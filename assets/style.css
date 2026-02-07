@@ -1,0 +1,241 @@
+/* ===================================================== */
+/* GLOBAL */
+/* ===================================================== */
+body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+}
+
+h2 {
+    margin-bottom: 16px;
+    color: #1f2933;
+}
+
+h4 {
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+/* ===================================================== */
+/* PAGE LAYOUT */
+/* ===================================================== */
+.page {
+    display: flex;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* ===================================================== */
+/* SIDEBAR */
+/* ===================================================== */
+.sidebar {
+    width: 260px;
+    min-width: 260px;
+    background-color: #f9fafb;
+    padding: 20px 16px;
+    border-right: 1px solid #e5e7eb;
+}
+
+.sidebar h3 {
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.sidebar label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Dropdown spacing */
+.sidebar .dash-dropdown {
+    margin-bottom: 14px;
+}
+
+/* ===================================================== */
+/* BUTTONS */
+/* ===================================================== */
+button {
+    width: 100%;
+    margin-top: 14px;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1e40af;
+}
+
+/* ===================================================== */
+/* MAIN CONTENT */
+/* ===================================================== */
+.content {
+    flex: 1;
+    padding: 24px 32px;
+    overflow-x: hidden;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ===================================================== */
+/* DASHBOARD IMAGES */
+/* ===================================================== */
+.dashboard-image {
+    max-width: 1200px;
+    width: 100%;
+    display: block;
+    margin: 0 auto 24px auto;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* ===================================================== */
+/* TABS */
+/* ===================================================== */
+.dash-tabs {
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 16px;
+}
+
+.tab {
+    background: none !important;
+    border: none !important;
+    padding: 10px 16px !important;
+    font-weight: 500;
+    color: #374151;
+}
+
+.tab--selected {
+    color: #ff3b3b !important;
+    border-bottom: 2px solid #ff3b3b !important;
+    font-weight: 600;
+}
+
+/* ===================================================== */
+/* AG GRID */
+/* ===================================================== */
+.ag-theme-alpine {
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    padding: 6px;
+}
+
+.ag-header {
+    background-color: #f9fafb !important;
+}
+
+.ag-header-cell-label {
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.ag-cell {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.ag-row {
+    border-bottom: 1px solid #f3f4f6 !important;
+}
+
+/* ===================================================== */
+/* 🔥 FIX DASH DROPDOWN SELECTED BLUE PILL */
+/* ===================================================== */
+
+/* Multi-value selected pills */
+.Select.multiValue {
+    background-color: #e5e7eb !important; /* gray pill */
+    border: 1px solid #9ca3af !important;
+}
+
+/* Selected value text */
+.Select .multiValueLabel {
+    color: #374151 !important;
+    font-weight: 500;
+}
+
+/* Remove (x) button */
+.Select .multiValueRemove {
+    color: #4b5563 !important;
+}
+
+/* Hover remove button */
+.Select .multiValueRemove:hover {
+    background-color: #9ca3af !important;
+    color: white !important;
+}
+
+/* Focused dropdown outline (not open) */
+.Select.has-value.is-clearable.is-searchable.Select--multi:focus,
+.Select.has-value.is-clearable.is-searchable.Select--multi:focus-within,
+.Select.has-value.is-clearable.is-searchable.Select--multi.is-focused {
+    border-color: #9ca3af !important;
+    box-shadow: none !important;
+}
+
+/* Option highlight when keyboard navigating */
+.Select-option.is-focused {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+}
+
+/* Option selected in menu */
+.Select-option.is-selected {
+    background-color: #e5e7eb !important;
+    color: #111827 !important;
+    font-weight: 500;
+}
+
+/* ===================================================== */
+/* 🔥 DROPDOWN COLOR OVERRIDES (EXISTING FIXES BLUE SELECTION) */
+/* ===================================================== */
+
+/* Selected value pill */
+.dash-dropdown [class*="multiValue"] {
+    background-color: #e5e7eb !important;  /* gray */
+    border: 1px solid #9ca3af !important;
+}
+
+/* Selected value text */
+.dash-dropdown [class*="multiValueLabel"] {
+    color: #374151 !important;
+    font-weight: 500;
+}
+
+/* Remove (x) button */
+.dash-dropdown [class*="multiValueRemove"] {
+    color: #4b5563 !important;
+}
+
+/* Hover remove */
+.dash-dropdown [class*="multiValueRemove"]:hover {
+    background-color: #9ca3af !important;
+    color: white !important;
+}
+
+/* Kill blue focus ring */
+.dash-dropdown [class*="control--is-focused"] {
+    border-color: #9ca3af !important;
+    box-shadow: none !important;
+}
+
+/* Kill blue option highlight */
+.dash-dropdown [class*="option--is-focused"] {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+}
+
+.dash-dropdown [class*="option--is-selected"] {
+    background-color: #e5e7eb !important;
+    color: #111827 !important;
+}
