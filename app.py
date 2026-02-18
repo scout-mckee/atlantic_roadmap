@@ -7,14 +7,13 @@ import os
 # =========================================================
 # LOAD DATA
 # =========================================================
-df = pd.read_excel("2026-02-03 Overall Barriers Initiatives.xlsx", sheet_name="Sheet1")
-tracking_df = pd.read_excel("2025-12-16 Initiatives Tracking.xlsx")
+df = pd.read_excel("2026-02-12 Final Barriers Initiatives.xlsx", sheet_name="Sheet1")
 
 # =========================================================
 # PREPROCESS
 # =========================================================
 df["ID"] = df["ID"].astype(str).str.strip()
-tracking_df["ID"] = tracking_df["ID"].astype(str).str.strip()
+df["Timeline"] = df["Timeline"].astype(str)
 df["Location Identified"] = df["Location Identified"].fillna("")
 df["Filtering-Contributors-Categories"] = df["Filtering-Contributors-Categories"].fillna("")
 df["location_tokens"] = df["Location Identified"].apply(lambda x: [v.strip() for v in str(x).split(",") if v.strip()])
@@ -143,11 +142,18 @@ def clear_filters(_):
 )
 def render_tab(tab, categories, subcategories, locations, stakeholders):
     filtered_all = apply_filters(df_all, categories, subcategories, locations, stakeholders)
+
     if tab == "dashboard":
         filtered_images = filtered_all[filtered_all["has_image"]]
-        return html.Div([html.Img(src=f"/assets/{i}.png", style={"width": "100%", "marginBottom": "24px"})
-                         for i in filtered_images["ID"]])
-    if tab == "initiatives":
+        return html.Div([
+            html.Img(
+                src=f"/assets/{i}.png",
+                style={"width": "100%", "marginBottom": "24px"}
+            )
+            for i in filtered_images["ID"]
+        ])
+
+    elif tab == "initiatives":
         return dag.AgGrid(
             className="ag-theme-alpine",
             columnDefs=[
@@ -157,31 +163,40 @@ def render_tab(tab, categories, subcategories, locations, stakeholders):
                 {"headerName": "Timeline", "field": "Timeline", "width": 130},
             ],
             rowData=filtered_all.to_dict("records"),
-            defaultColDef={"resizable": True, "sortable": True, "wrapText": True, "autoHeight": True,
-                           "cellStyle": {"whiteSpace": "normal", "lineHeight": "1.4"}},
+            defaultColDef={
+                "resizable": True,
+                "sortable": True,
+                "wrapText": True,
+                "autoHeight": True,
+                "cellStyle": {"whiteSpace": "normal", "lineHeight": "1.4"}
+            },
             dashGridOptions={"domLayout": "normal", "rowHeight": 72},
             style={"height": "520px"},
         )
-    valid_ids = set(filtered_all["ID"])
-    filtered_tracking_df = tracking_df[tracking_df["ID"].isin(valid_ids)]
-    return dag.AgGrid(
-        className="ag-theme-alpine",
-        columnDefs=[
-            {"headerName": "Initiative", "field": "Initiative", "autoHeight": True, "minWidth": 230, "flex": 1},
-            {"headerName": "Category", "field": "Category", "width": 120},
-            {"headerName": "NB", "field": "NB Status", "width": 80, "cellStyle": status_style},
-            {"headerName": "NS", "field": "NS Status", "width": 80, "cellStyle": status_style},
-            {"headerName": "PEI", "field": "PEI Status", "width": 80, "cellStyle": status_style},
-            {"headerName": "NL", "field": "NL Status", "width": 80, "cellStyle": status_style},
-            {"headerName": "Regional", "field": "Regional", "width": 100, "cellStyle": status_style},
-            {"headerName": "Metric Notes", "field": "Metric Notes", "autoHeight": True, "minWidth": 140, "flex": 1},
-        ],
-        rowData=filtered_tracking_df.to_dict("records"),
-        defaultColDef={"resizable": True, "wrapText": True, "autoHeight": True,
-                       "cellStyle": {"whiteSpace": "normal", "lineHeight": "1.4"}},
-        dashGridOptions={"rowHeight": 72, "domLayout": "normal"},
-        style={"height": "520px"},
-    )
+
+    elif tab == "tracking":
+        return dag.AgGrid(
+            className="ag-theme-alpine",
+            columnDefs=[
+                {"headerName": "Initiative", "field": "Initiative", "autoHeight": True, "minWidth": 230, "flex": 1},
+                {"headerName": "Category", "field": "Category", "width": 120},
+                {"headerName": "NB", "field": "NB Status", "width": 80, "cellStyle": status_style},
+                {"headerName": "NS", "field": "NS Status", "width": 80, "cellStyle": status_style},
+                {"headerName": "PEI", "field": "PEI Status", "width": 80, "cellStyle": status_style},
+                {"headerName": "NL", "field": "NL Status", "width": 80, "cellStyle": status_style},
+                {"headerName": "Regional", "field": "Regional", "width": 100, "cellStyle": status_style},
+                {"headerName": "Metric Notes", "field": "Metric Notes", "autoHeight": True, "minWidth": 140, "flex": 1},
+            ],
+            rowData=filtered_all.to_dict("records"),
+            defaultColDef={
+                "resizable": True,
+                "wrapText": True,
+                "autoHeight": True,
+                "cellStyle": {"whiteSpace": "normal", "lineHeight": "1.4"}
+            },
+            dashGridOptions={"rowHeight": 72, "domLayout": "normal"},
+            style={"height": "520px"},
+        )
 
 # =========================================================
 # RUN
